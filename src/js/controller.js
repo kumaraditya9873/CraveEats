@@ -1,8 +1,10 @@
-// import icons from '../img/icons.svg' //parcel 1
+// import * as model from "./model.js";
+// import recipeView from "./views/recipeView.js";
 import icons from "url:../img/icons.svg"; // parcel 2
+
 import "core-js/stable";
 import "regenerator-runtime/runtime";
-console.log(icons);
+// import recipeView from "./views/recipeView.js";
 
 const recipeContainer = document.querySelector(".recipe");
 
@@ -19,30 +21,27 @@ const timeout = function (s) {
 ///////////////////////////////////////
 const renderSpinner = function (parentEl) {
   const markup = `
-  <div class="spinner">
-          <svg>
-            <use href="${icons}#icons-loader"></use>
-          </svg>
-        </div>`;
+  <div class ="spinner">
+  <svg>
+  <use href = "${icons}#icon-loader"></use>
+  </svg>
+  </div>
+  `;
   parentEl.innerHTML = "";
   parentEl.insertAdjacentHTML("afterbegin", markup);
 };
 
 const showRecipe = async function () {
   try {
-    const id = window.location.hash.slice(1);
-    console.log(id);
-
-    if (!id) return;
-    // loading recipe
+    // 1 loading recipe
     renderSpinner(recipeContainer);
+
     const res = await fetch(
-      `https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc886${id}`
+      // "https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bcc40"
+      "https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc886"
     );
     const data = await res.json();
-
     if (!res.ok) throw new Error(`${data.message} (${res.status})`);
-
     let { recipe } = data.data;
     recipe = {
       id: recipe.id,
@@ -55,9 +54,9 @@ const showRecipe = async function () {
       ingredients: recipe.ingredients,
     };
     console.log(recipe);
-    // 2 rendering recipe
+    // 2 renering recipe
     const markup = `
-    <figure class="recipe__fig">
+         <figure class="recipe__fig">
           <img src="${recipe.image}" alt="${recipe.title}"  class="recipe_img"/>
           <h1 class="recipe__title">
             <span>${recipe.title}</span>
@@ -91,7 +90,7 @@ const showRecipe = async function () {
               </button>
               <button class="btn--tiny btn--increase-servings">
                 <svg>
-                  <use href="${icons}#icon-plus-circle"></use>
+                   <use href="${icons}#icon-plus-circle"></use>
                 </svg>
               </button>
             </div>
@@ -146,18 +145,39 @@ const showRecipe = async function () {
           >
             <span>Directions</span>
             <svg class="search__icon">
-              <use href="${icons}#icon-arrow-right"></use>
+               <svg class="search__icon">
             </svg>
           </a>
         </div>
-        `;
+   `;
     recipeContainer.innerHTML = "";
     recipeContainer.insertAdjacentHTML("afterbegin", markup);
   } catch (err) {
     alert(err);
   }
 };
-["haschange", "load"].forEach((ev) => window.addEventListener(ev, showRecipe));
+showRecipe();
 
+// const showRecipe = async function () {
+//   try {
+//     const id = window.location.hash.slice(1);
+//     console.log(id);
+
+//     if (!id) return;
+//     recipeView.renderSpinner();
+
+//     // loading recipe
+//     await model.loadRecipe(id);
+
+//     // 2 rendering recipe
+//     recipeView.render(model.state.recipe);
+//   } catch (err) {
+//     alert(err);
+//   }
+// };
 // window.addEventListener("hashchange", showRecipe);
-// window.addEventListener("load", showRecipe);
+
+// // ["haschange", "load"].forEach((ev) => window.addEventListener(ev, showRecipe));
+
+// // window.addEventListener("hashchange", showRecipe);
+// // window.addEventListener("load", showRecipe);

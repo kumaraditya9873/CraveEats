@@ -557,15 +557,32 @@ function hmrAccept(bundle, id) {
 }
 
 },{}],"aenu9":[function(require,module,exports) {
-// import icons from '../img/icons.svg' //parcel 1
+// import * as model from "./model.js";
+// import recipeView from "./views/recipeView.js";
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-var _esRegexpFlagsJs = require("core-js/modules/es.regexp.flags.js"); // window.addEventListener("hashchange", showRecipe);
- // window.addEventListener("load", showRecipe);
+var _esRegexpFlagsJs = require("core-js/modules/es.regexp.flags.js"); // const showRecipe = async function () {
+ //   try {
+ //     const id = window.location.hash.slice(1);
+ //     console.log(id);
+ //     if (!id) return;
+ //     recipeView.renderSpinner();
+ //     // loading recipe
+ //     await model.loadRecipe(id);
+ //     // 2 rendering recipe
+ //     recipeView.render(model.state.recipe);
+ //   } catch (err) {
+ //     alert(err);
+ //   }
+ // };
+ // window.addEventListener("hashchange", showRecipe);
+ // // ["haschange", "load"].forEach((ev) => window.addEventListener(ev, showRecipe));
+ // // window.addEventListener("hashchange", showRecipe);
+ // // window.addEventListener("load", showRecipe);
 var _webImmediateJs = require("core-js/modules/web.immediate.js");
 var _iconsSvg = require("url:../img/icons.svg"); // parcel 2
 var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
 var _runtime = require("regenerator-runtime/runtime");
-console.log((0, _iconsSvgDefault.default));
+// import recipeView from "./views/recipeView.js";
 const recipeContainer = document.querySelector(".recipe");
 const timeout = function(s) {
     return new Promise(function(_, reject) {
@@ -578,22 +595,21 @@ const timeout = function(s) {
 ///////////////////////////////////////
 const renderSpinner = function(parentEl) {
     const markup = `
-  <div class="spinner">
-          <svg>
-            <use href="${(0, _iconsSvgDefault.default)}#icons-loader"></use>
-          </svg>
-        </div>`;
+  <div class ="spinner">
+  <svg>
+  <use href = "${(0, _iconsSvgDefault.default)}#icon-loader"></use>
+  </svg>
+  </div>
+  `;
     parentEl.innerHTML = "";
     parentEl.insertAdjacentHTML("afterbegin", markup);
 };
 const showRecipe = async function() {
     try {
-        const id = window.location.hash.slice(1);
-        console.log(id);
-        if (!id) return;
-        // loading recipe
+        // 1 loading recipe
         renderSpinner(recipeContainer);
-        const res = await fetch(`https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc886${id}`);
+        const res = await fetch(// "https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bcc40"
+        "https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc886");
         const data = await res.json();
         if (!res.ok) throw new Error(`${data.message} (${res.status})`);
         let { recipe  } = data.data;
@@ -608,9 +624,9 @@ const showRecipe = async function() {
             ingredients: recipe.ingredients
         };
         console.log(recipe);
-        // 2 rendering recipe
+        // 2 renering recipe
         const markup = `
-    <figure class="recipe__fig">
+         <figure class="recipe__fig">
           <img src="${recipe.image}" alt="${recipe.title}"  class="recipe_img"/>
           <h1 class="recipe__title">
             <span>${recipe.title}</span>
@@ -640,7 +656,7 @@ const showRecipe = async function() {
               </button>
               <button class="btn--tiny btn--increase-servings">
                 <svg>
-                  <use href="${(0, _iconsSvgDefault.default)}#icon-plus-circle"></use>
+                   <use href="${(0, _iconsSvgDefault.default)}#icon-plus-circle"></use>
                 </svg>
               </button>
             </div>
@@ -691,23 +707,50 @@ const showRecipe = async function() {
           >
             <span>Directions</span>
             <svg class="search__icon">
-              <use href="${(0, _iconsSvgDefault.default)}#icon-arrow-right"></use>
+               <svg class="search__icon">
             </svg>
           </a>
         </div>
-        `;
+   `;
         recipeContainer.innerHTML = "";
         recipeContainer.insertAdjacentHTML("afterbegin", markup);
     } catch (err) {
         alert(err);
     }
 };
-[
-    "haschange",
-    "load"
-].forEach((ev)=>window.addEventListener(ev, showRecipe));
+showRecipe();
 
-},{"url:../img/icons.svg":"loVOp","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","core-js/modules/es.regexp.flags.js":"gSXXb","core-js/modules/web.immediate.js":"49tUX","regenerator-runtime/runtime":"dXNgZ"}],"loVOp":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","url:../img/icons.svg":"loVOp","core-js/modules/es.regexp.flags.js":"gSXXb","core-js/modules/web.immediate.js":"49tUX","regenerator-runtime/runtime":"dXNgZ"}],"gkKU3":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, "__esModule", {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"loVOp":[function(require,module,exports) {
 module.exports = require("cc30def771ebab9c").getBundleURL("hWUTQ") + "icons.dfd7a6db.svg" + "?" + Date.now();
 
 },{"cc30def771ebab9c":"lgJ39"}],"lgJ39":[function(require,module,exports) {
@@ -743,36 +786,6 @@ function getOrigin(url) {
 exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
 exports.getOrigin = getOrigin;
-
-},{}],"gkKU3":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, "__esModule", {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
 
 },{}],"gSXXb":[function(require,module,exports) {
 var global = require("ac5979e76ba7dbe8");
