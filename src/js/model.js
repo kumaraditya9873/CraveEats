@@ -23,7 +23,8 @@ export const loadRecipe = async function (id) {
     console.log(state.recipe);
   } catch (err) {
     // temp error handeling
-    console.log(`${err} `);
+    console.error(`${err} hgfdsa`);
+    throw err;
   }
 };
 
